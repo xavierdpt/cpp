@@ -1,44 +1,51 @@
 #include <iostream>
+#include <vector>
+#include <memory>
 
 using namespace std;
 
-class A {
-	int a;
-	int b;
+class Base {
 public:
-	A(int b, int a) : a(a), b(b) {}
-	int getA() const { return a; }
-	int getB() const { return b; }
+	virtual ~Base() {}
+	virtual void foo() = 0;
 };
 
-struct B {
-	int a;
-	int b;
+class X : virtual public Base {
+private:
+	int x;
+public:
+	X(int x) : x(x) { }
+	int getX() const { return x; }
+	void foo() {
+		cout << "Hello from X ; x = " << x << endl;
+	}
 };
 
-struct C {
-	int a;
-	int b;
-	C(int b, int a) : a(a), b(b) {}
-	int getA() const { return a; }
-	int getB() const { return b; }
+class Y : virtual public Base {
+private:
+	int y;
+public:
+	Y(int y) : y(y) { }
+	int getY() const { return y; }
+	void foo() {
+		cout << "Hello from Y ; y = " << y << endl;
+	}
 };
 
+class XY : public X, public Y {
+public:
+	XY(int x, int y) : X(x), Y(y) { }
+	void foo() {
+		cout << "Hello from XY ; x = " << getX() << " and y = " << getY() << endl;
+	}
+};
 
 int main(int argc, char** argv) {
+
 	cout << "Hello World !" << endl;
-	cout << "Hello World !" << endl;
-	const A a {1,2};
-	cout << a.getA() << endl;
-	cout << a.getB() << endl;
-
-	const B b {1,2};
-	cout << b.a << endl;
-	cout << b.b << endl;
-
-	const C c1 {1,2};
-	cout << c1.getA() << endl;
-	cout << c1.getB() << endl;
-
+	shared_ptr<Base> pxy(new XY(1,2));
+	vector<shared_ptr<Base>> v;
+	v.push_back(pxy);
+	v.front()->foo();
 	return EXIT_SUCCESS;
 }
