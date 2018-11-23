@@ -1,1 +1,5 @@
 https://stackoverflow.com/questions/548751/should-i-become-proficient-with-stl-libraries-before-learning-boost-alternatives
+
+https://en.cppreference.com/w/cpp/language
+
+thbecker.net/articles/rvalue_references/section_01
